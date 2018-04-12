@@ -48,6 +48,10 @@ $navbar-default-bg: #0a4f0d;
   background-color: #0a4f0d;
 }
 
+textarea {
+  resize: none;
+}
+
 // ================================================
 // ================ Recipes =======================
 // ================================================
@@ -62,4 +66,8 @@ $navbar-default-bg: #0a4f0d;
 
 .user_info {
   margin-top: 10px;
+}
+
+.colormatch a {
+  color: #073B15;
 }
