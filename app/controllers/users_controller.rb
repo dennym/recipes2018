@@ -1,5 +1,9 @@
 class UsersController < ApplicationController
 
+  def index
+    @users = User.paginate(page: params[:page], per_page: 5)
+  end
+
   def new
     @user = User.new
   end
@@ -16,6 +20,7 @@ class UsersController < ApplicationController
 
   def show
     @user =  User.find(params[:id])
+    @user_recipes = @user.recipes.paginate(page: params[:page], per_page: 5) # here with the instance variable @user_recipes we are going to collect the recipes base on pagination(5 at a time), and then apply in to show page
   end
 
   def edit
@@ -32,18 +37,18 @@ class UsersController < ApplicationController
     end
   end
 
-  def index
-    @user = User.all
-  end
 
   def destroy
-
+    @user = User.find(params[:id])
+    @user.destroy
+    flash[:danger] = "Chef and all associated recipes have been deleted"
+    redirect_to users_path
   end
-
 
   private
 
   def user_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation)
   end
+
 end

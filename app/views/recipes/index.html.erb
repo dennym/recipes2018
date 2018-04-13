@@ -2,4 +2,12 @@
 
 <!-- i made a partial for recipes index with name _recipe.html.erb
 because i want to use this partial at user show page to show the recipes of this user -->
+<div class="center">
+  <%= will_paginate %>
+</div>
+
 <%= render "recipe", obj: @recipes %>
+
+<div class="center">
+  <%= will_paginate %>
+</div>

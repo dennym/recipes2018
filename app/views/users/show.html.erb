@@ -7,4 +7,15 @@
 </div>
 
 <h4 align="center"><%= @user.name %>'s recipes</h4>
-<%= render "recipes/recipe", obj: @user.recipes %>        <!-- @user.recipes because we want to show up the recipes of this user that we click on -->
+
+<div align="center">
+  <%= will_paginate @user_recipes %>
+</div>
+<!-- this will not work with will_paginate alone so i had to make
+a new variable in users_controller,show action(this is why we can call below the @user for .recipes, because there we find the user for show)
+with name @user_recipes and i set it eq with @user.recipes and i do the paginate on this,
+so i can do the paginate with will_paginate and then the given variable(@user_recipes). will_paginate @user_paginate -->
+<%= render "recipes/recipe", obj: @user_recipes %>
+<div align="center">
+  <%= will_paginate @user_recipes %>
+</div>
