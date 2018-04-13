@@ -1,6 +1,6 @@
 <%= render "shared/page_title", title: @recipe.name %>
 
-<div class="well col-md-8 col-md-offset-2">
+<div class="well col-md-8 col-xs-12 col-md-offset-2">
   <h4 class="center description"><strong>Steps: </strong></h4>
   <hr />
   <%= simple_format(@recipe.description) %>
@@ -18,3 +18,4 @@
     </p>
   </div>
 </div>
+<%= link_to "Return to recipes listing", recipes_path, class: "btn btn-xs btn-primary" %>
