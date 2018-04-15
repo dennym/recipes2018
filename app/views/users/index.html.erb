@@ -9,8 +9,10 @@
          <li><%= link_to gravatar_for(user), user_path(user) %></li>
          <li class="user-title"><%= link_to user.name.capitalize, user_path(user) %></li>
          <li><small><%= pluralize(user.recipes.count, "recipe") if user.recipes %></small></li>
-         <li><%= link_to "Delete this chef", user_path(user), method: :delete,
+         <% if logged_in? && current_user.admin? && !user.admin? %> <!-- with !user.admin? we make the restriction so we can't delete ourself. user is comming from the current user object that we loop througth @users.each do. Any && expression that has a false is immediately false and we stop there -->
+           <li><%= link_to "Delete this chef", user_path(user), method: :delete,
                                            data: {confirm: "Are you sure you want to delete this chef and all associated recipes?"} %></li>
+        <% end %>
        </div>
       </div>
     </ul>
