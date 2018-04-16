@@ -8,8 +8,14 @@
     <div class="col-md-8 well">
       <h4><%= link_to recipe.name, recipe_path(recipe) %></h4>
       <p><%= truncate(recipe.description, length: 150) %></p>
+      <% if recipe.ingredients.any? %>
+                            <!--this render will lookup this collection recipe.ingredients and by
+                            rails magic it will think that there is a ingredient partial under ingredients views
+                            and it will try to render that for each ingredient -->
+        <p>Ingredients: <%= render recipe.ingredients %></p>
+      <% end %>
       <p>
-        <span class="quiet"><small>Created <%= time_ago_in_words(recipe.created_at) %> ago by <%= link_to recipe.user.name %></small></span>
+        <span class="quiet"><small>Created <%= time_ago_in_words(recipe.created_at) %> ago by <%= link_to recipe.user.name.capitalize, user_path(recipe.user)%></small></span>
       </p>
       <% if logged_in? && (current_user == recipe.user || current_user.admin?) %>
         <div class="recipe-actions">

@@ -1,24 +1,18 @@
-<%= render 'shared/page_title', title: "Chef #{@user.name}'s profile" %>
+<%= render 'shared/page_title', title: "#{@ingredient.name}" %>
 
-<div class="row">
-  <div class="col-md-4 col-md-offset-4 center">
-    <%= gravatar_for @user, size: 150 %>
-  </div>
-</div>
-
-<% if @user.recipes.count != 0 %>
-  <h4 align="center"><%= @user.name %>'s recipes</h4>
+<% if @ingredient.recipes.count != 0 %>
+  <h4 align="center">Recipes containing <%= @ingredient.name %></h4>
 
   <div align="center">
-    <%= will_paginate @user_recipes %>
+    <%= will_paginate @ingredient_recipes %>
   </div>
   <!-- this will not work with will_paginate alone so i had to make
   a new variable in users_controller,show action(this is why we can call below the @user for .recipes, because there we find the user for show)
   with name @user_recipes and i set it eq with @user.recipes and i do the paginate on this,
   so i can do the paginate with will_paginate and then the given variable(@user_recipes). will_paginate @user_paginate -->
-  <%= render "recipes/recipe", obj: @user_recipes %>
+  <%= render "recipes/recipe", obj: @ingredient_recipes %>
   <div align="center">
-    <%= will_paginate @user_recipes %>
+    <%= will_paginate @ingredient_recipes %>
   </div>
 <% else %>
   <h4 align="center">No recipes yet!</h4>
