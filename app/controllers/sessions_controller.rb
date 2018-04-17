@@ -6,8 +6,8 @@ class SessionsController < ApplicationController
 
   def create #it handle the submit action(post)
     user = User.find_by(email: params[:session][:email].downcase)
-    if user && user.authenticate(params[:session][:password])      #if user user if it's valid
-      session[:user_id] = user.id   #login mean storing  the encrypted user_id in the session hash(cookie), so i set the session[:user_id] to this user.id
+    if user && user.authenticate(params[:session][:password])   # If the user exists AND the password entered is correct.
+      session[:user_id] = user.id   # Save the user id inside the browser cookie. This is how we keep the user logged in when they navigate around our website.
       flash[:success] = "You have successfully logged in"
       redirect_to user
     else

@@ -1,8 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
-  # if you want to build a method that you are only going to use in the views(navigation, forms etc)
-  # then you can use helpers(application_helper).
+  # if you want to build a method that you are only going to use in the views(navigation, forms etc) then you can use helpers(application_helper).
   # However application_controller, every method we build here will be available to all of our controller and we are going to use these methods to our controllers as well.
   # And then we will add helper method and identify those methods as helper methods, so they can be available in the views as well
   # So we can do two things at once, like below.
