@@ -2,6 +2,10 @@ class SessionsController < ApplicationController
 
   def new
     #just render the new form
+    if logged_in?
+      # flash[:success] = "You are already logged_in!"
+      redirect_to @current_user
+    end
   end
 
   def create #it handle the submit action(post)
