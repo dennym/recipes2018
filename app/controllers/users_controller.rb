@@ -10,6 +10,7 @@ class UsersController < ApplicationController
 
   def new
     if logged_in?
+      flash[:success] = "You are already logged_in!"
       redirect_to current_user
     else
       @user = User.new

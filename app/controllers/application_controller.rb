@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
 
   def logged_in?
     # Here the logged_in? method should return a boolean value (as indicated by convention by the ? character).
-    # The internal logic it uses to decide this value is by checking to see if the current_user variable is set.
+    # The internal logic it uses to decide this value  by checking to see if the current_user variable is set.
     # If it is set, it will evaluate to true in a boolean context. If not, it will evaluate as false.
     # The double negation forces the return value to be a boolean.
     !!current_user
