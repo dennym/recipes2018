@@ -1,21 +1,19 @@
 <% obj.each do |recipe| %>
   <div class="row">
-    <div class="col-md-2">
-      <section class="user_info center">
-        <%= link_to gravatar_for(recipe.user, size: 120), user_path(recipe.user) %>
-      </section>
-    </div>
-    <div class="col-md-8 well">
+
+    <div class="col-md-8 col-xs-8 col-md-offset-2 col-xs-offset-2 well">
+      <div class="col-md-4 col-xs-4 img">
+        <section class="image_info">
+          <%= link_to image_tag(recipe.image_url.url, class: "img-responsive"), recipe_path(recipe) if recipe.image_url.present? %> <!-- Always handle every possible data that can be blank (nil or empty).. In this case i need to have if condition to show image_url placeholder image if the Recipe image is blank -->
+        </section>
+      </div>
       <h4><%= link_to recipe.name, recipe_path(recipe) %></h4>
       <p><%= truncate(recipe.description, length: 150) %></p>
       <% if recipe.ingredients.any? %>
-                            <!--this render will lookup this collection recipe.ingredients and by
-                            rails magic it will think that there is a ingredient partial under ingredients views
-                            and it will try to render that for each ingredient -->
-        <p>Ingredients: <%= render recipe.ingredients %></p>
+        <p>Ingredients: <%= render recipe.ingredients %></p> <!--this render will lookup this collection recipe.ingredients and by rails magic it will think that there is a ingredient partial under ingredients views and it will try to render that for each ingredient -->
       <% end %>
       <p>
-        <span class="quiet"><small>Created <%= time_ago_in_words(recipe.created_at) %> ago by <%= link_to recipe.user.name.capitalize, user_path(recipe.user) %> | <%= pluralize(recipe.comments.count, "Comment") %></small></span>
+        <span class="quiet pull-right"><small>Created <%= time_ago_in_words(recipe.created_at) %> ago by <%= link_to recipe.user.name.capitalize, user_path(recipe.user) %> <%= link_to gravatar_for(recipe.user, size: 60), user_path(recipe.user) %> | <%= pluralize(recipe.comments.count, "Comment") %></small></span>
       </p>
       <% if logged_in? && (current_user == recipe.user || current_user.admin?) %>
         <div class="recipe-actions">

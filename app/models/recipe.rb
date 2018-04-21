@@ -7,4 +7,6 @@ class Recipe < ApplicationRecord
   has_many :recipe_ingredients
   has_many :ingredients, through: :recipe_ingredients
   has_many :comments, dependent: :destroy
+  mount_uploader :image_url, ImageUploader
+  validates :image_url, presence: true
 end
