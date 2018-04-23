@@ -61,6 +61,8 @@ gem 'jquery-rails'
 gem 'will_paginate', '3.1.0'
 gem 'bootstrap-will_paginate', '0.0.10'
 gem 'carrierwave', '~> 1.0'
+gem "fog"
+
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data'
