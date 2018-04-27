@@ -1,8 +1,9 @@
 <%= render "shared/page_title", title: "log in" %>
 
-<!-- this is not a  model backed form, there is no resource that is available so form_for(@user....) will not work
-and form_for doesnt even know where to submit this form since this is not backed by a resource, so we are  gone have manually provide that.
-so we put :session and the we specify where to submit to (url: login_path) -->
+
+<!-- The main difference between the session form and the signup form is that we have no Session model, and hence no analogue for the @user variable.
+This means that, in constructing the new session form, we have to give form_for slightly more information, in the case of sessions we need to
+indicate the name of the resource and the corresponding URL -->
 <%= form_for(:session, :html => {class: "form-horizontal", role: "form"}, url: login_path) do |f| %>
   <div class="form-group">
     <div class="control-label col-md-2">

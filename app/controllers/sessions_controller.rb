@@ -10,12 +10,12 @@ class SessionsController < ApplicationController
 
   def create #it handle the submit action(post)
     user = User.find_by(email: params[:session][:email].downcase)
-    if user && user.authenticate(params[:session][:password])   # If the user exists AND the password entered is correct.  
+    if user && user.authenticate(params[:session][:password])   # If the user exists AND the password entered is correct.
       session[:user_id] = user.id   # Save the user id inside the browser cookie. This is how we keep the user logged in when they navigate around our website.
       flash[:success] = "You have successfully logged in"
       redirect_to user
     else
-      flash.now[:danger] = "There was something wrong with your login information" # with flash.now it will just display on the same page and then disappear
+      flash.now[:danger] = "There was something wrong with your login information" # Unlike the contents of flash , the contents of flash.now disappear as soon as there is an additional request
       render "new"
     end
   end
