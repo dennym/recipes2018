@@ -6,26 +6,27 @@ describe Recipe, type: :model do
     @recipe = FactoryBot.build(:recipe)
   end
 
+  context "when you create a recipe" do
     it "should not be valid without a user" do
       @recipe.user_id = nil
       expect(@recipe).not_to be_valid
     end
 
-    it "should have valid image" do
+    it "should not be valid without image" do
       @recipe.image_url = nil
       expect(@recipe).not_to be_valid
     end
+  end
 
-  describe "name" do
 
+  context "name" do
     it "should be present" do
       @recipe.name = nil
       expect(@recipe).not_to be_valid
     end
   end
 
-  describe "description" do
-
+  context "description" do
     it "should be present" do
       @recipe.description = nil
       expect(@recipe).not_to be_valid
@@ -40,7 +41,6 @@ describe Recipe, type: :model do
       @recipe.description = " " * 101
       expect(@recipe).not_to be_valid
     end
-
   end
 
 end

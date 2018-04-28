@@ -6,26 +6,19 @@ describe User, type: :model do
     @user = FactoryBot.build(:user)
   end
 
-  describe "name" do
-
+  context "name" do
     it "should be present" do
       @user.name = nil
       expect(@user).not_to be_valid
-    end
-
-    it "should validate user with name" do
-      expect(@user).to be_valid
     end
 
     it "should not be more than 30 characters" do
       @user.name = "a" * 31
       expect(@user).not_to be_valid
     end
-
   end
 
-  describe "email" do
-
+  context "email" do
     it "should be present" do
       @user.email = nil
       expect(@user).not_to be_valid
@@ -65,11 +58,9 @@ describe User, type: :model do
       @user.save
       expect(@user.reload.email).to eq(@user.email.downcase)
     end
-
   end
 
-  describe "password" do
-
+  context "password" do
     it "should be present" do
       @user.password = nil
       expect(@user).not_to be_valid
@@ -79,7 +70,6 @@ describe User, type: :model do
       @user.password = " " * 3
       expect(@user).not_to be_valid
     end
-
   end
 
     xit "should destroy dependent recipes" do

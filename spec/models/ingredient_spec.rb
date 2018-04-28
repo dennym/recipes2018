@@ -6,8 +6,7 @@ describe Ingredient, type: :model do
     @ingredient = FactoryBot.build(:ingredient)
   end
 
-  describe "name" do
-
+  context "name" do
     it "should be present" do
       @ingredient.name = nil
       expect(@ingredient).not_to be_valid
@@ -29,7 +28,6 @@ describe Ingredient, type: :model do
       @ingredient.save
       expect(duplicate_ingredient).not_to be_valid
     end
-
   end
 
 end
