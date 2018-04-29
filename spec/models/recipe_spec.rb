@@ -18,7 +18,6 @@ describe Recipe, type: :model do
     end
   end
 
-
   context "name" do
     it "should be present" do
       @recipe.name = nil
