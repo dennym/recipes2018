@@ -1,88 +1,71 @@
 require "spec_helper"
 
-describe User, type: :model do
-  it { is_expected.to have_many(:recipes).depentent(:destroy) }
-  it { is_expected.to have_many(:comments).depentent(:destroy) }
+describe User do
+  it { is_expected.to have_many(:recipes).dependent(:destroy) }
+  it { is_expected.to have_many(:comments).dependent(:destroy) }
+
+  it 'comes valid from factory' do
+    expect(build(:user)).to be_valid
+  end
 
   before do
-    @user = FactoryBot.build(:user)
+    @user = build(:user)
   end
 
-  context "name" do
-    it "should be present" do
-      @user.name = nil
-      expect(@user).not_to be_valid
-    end
-
-    it "should not be more than 30 characters" do
-      @user.name = "a" * 31
-      expect(@user).not_to be_valid
-    end
-  end
-
-  context "email" do
-    it "should be present" do
+  context 'on validation' do
+    it 'is invalid without email' do
       @user.email = nil
       expect(@user).not_to be_valid
     end
 
-    it "should be unique and case sensitive" do
-      duplicate_user = @user.dup
-      duplicate_user.email = @user.email.upcase
-      @user.save
-      expect(duplicate_user).not_to be_valid
-    end
-
-    it "should not be more than 255 characters" do
-      @user.email = "a" * 245 + "@example.com"
-      expect(@user).not_to be_valid
-    end
-
-    it "should accept correct format" do
-      valid_emails = %w[user@example.com STEFANOS@gmail.com a+b@yahoo.ca user@foo.COM smith@co.uk.org]
-      valid_emails.each do |valid_email|
-        @user.email = valid_email
-        expect(@user).to be_valid
-      end
-    end
-
-    it "should reject invalid email addresses" do
-      invalid_emails = %w[user@example,com STEFANOS@gmail a+b@yahoo. user@foo+bar.COM smith@co+ca.uk.org]
-      invalid_emails.each do |invalid_email|
-        @user.email = invalid_email
-        expect(@user).not_to be_valid
-      end
-    end
-
-    it "should be lowercase before hit the database" do
-      mixed_email = "StEf@examplE.com"
-      @user.email = mixed_email
-      @user.save
-      expect(@user.reload.email).to eq(@user.email.downcase)
-    end
-  end
-
-  context "password" do
-    it "should be present" do
+    it 'is invalid without password' do
       @user.password = nil
+      expect(@user).to be_invalid
+    end
+
+    it 'is invalid when password is shorter than 5' do
+      @user.password = ' ' * 3
       expect(@user).not_to be_valid
     end
 
-    it "should not be less than 5 characters" do
-      @user.password = " " * 3
-      expect(@user).not_to be_valid
+    it 'is invalid without name' do
+      @user.name = nil
+      expect(@user).to be_invalid
+    end
+
+    it 'is invalid when name is longer than 30' do
+      @user.name = "a" * 31
+      expect(@user).to be_invalid
+    end
+
+    context 'when user with given email exists' do
+      it 'is invalid' do
+        @user.save
+        expect(build(:user, email: @user.email)).to be_invalid
+      end
+    end
+
+    context 'when email format is not correct' do
+      it 'is invalid' do
+        invalid_emails = %w(sam@example user@example,com STEFANOS@gmail a+b@yahoo. user@foo+bar.COM smith@co+ca.uk.org)
+        invalid_emails.each do |invalid_email|
+          @user.email = invalid_email
+          expect(@user).to be_invalid
+        end
+      end
+
+      it 'is invalid when email longer than 255' do
+        @user.email = 'a' * 245 + '@example.com'
+        expect(@user).to be_invalid
+      end
+    end
+
+    context 'on_save' do
+      it 'is lowercase when its saved' do
+        @user.email = 'StEf@examplE.com'
+        @user.save
+        expect(@user.reload.email).to eq(@user.email.downcase)
+      end
     end
   end
-
-    xit "should destroy dependent recipes" do
-      #i can't implement this but i will return here later.
-      # i'm taking the following error:
-      # expected `Recipe.count` to have changed by -1, but was changed by 0
-      @user = FactoryBot.build(:user)
-      @recipe = FactoryBot.build(:recipe)
-
-      @user.recipes << @recipe
-      @user.destroy
-      expect { @user.destroy }.to change { Recipe.count }.by(-1)
-    end
 end
