@@ -5,6 +5,8 @@ require File.expand_path('../../config/environment', __FILE__)
 abort('The Rails environment is running in production mode!') if Rails.env.production?
 
 require 'rspec/rails'
+require 'capybara/rspec'
+require 'rack_session_access/capybara'
 require 'ffaker'
 
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
@@ -12,14 +14,16 @@ Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
+  config.include Features::SessionHelpers, type: :feature
+
   config.infer_spec_type_from_file_location!
   config.use_transactional_fixtures = true
   config.infer_base_class_for_anonymous_controllers = true
   config.order = 'random'
   config.filter_run focus: (ENV['CI'] != 'true')
   config.run_all_when_everything_filtered = true
-
   config.expect_with(:rspec) { |c|  c.syntax = :expect }
+  config.filter_rails_from_backtrace!
 
   config.expect_with :rspec do |expectations|
     # This option will default to `true` in RSpec 4. It makes the `description`
