@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe RecipesController, type: :controller do
+RSpec.describe RecipesController do
 
   before do
     @user = FactoryBot.build(:user)
@@ -11,26 +11,26 @@ RSpec.describe RecipesController, type: :controller do
     @recipe1 = FactoryBot.create(:recipe)
   end
 
-  describe "GET #index" do
+  describe 'GET #index' do
     #for the next two tests also could be done in one implementation
-    it "renders the index template" do
+    it 'renders the index template' do
       get :index
       expect(response).to have_http_status(:success)
       expect(response).to render_template("index")
     end
 
-    it "should get recipes listing" do
+    it 'should get recipes listing' do
       get :index
       expect(response).to have_http_status(:success)
       expect(assigns(:recipes)).to match_array([@recipe, @recipe1])
     end
   end
 
-  describe "GET #show" do
-    it "should render the recipe show page" do
+  describe 'GET #show' do
+    it 'should render the recipe show page' do
       get :show, params: { id: @recipe.id }
       expect(response).to have_http_status(:success)
-      expect(response).to render_template("show")
+      expect(response).to render_template('show')
       expect(assigns(:recipe)).to eq(@recipe)
     end
   end
