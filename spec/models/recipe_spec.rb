@@ -1,6 +1,9 @@
 require "spec_helper"
 
-describe Recipe, type: :model do
+describe Recipe do
+  it { is_expected.to have_many :recipe_ingredients }
+  it { is_expected.to have_many(:ingredients).through(:recipe_ingredients) }
+  it { is_expected.to have_many(:comments).dependent(:destroy) }
 
   before do
     @recipe = FactoryBot.build(:recipe)

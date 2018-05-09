@@ -1,6 +1,8 @@
 require "spec_helper"
 
 describe User, type: :model do
+  it { is_expected.to have_many(:recipes).depentent(:destroy) }
+  it { is_expected.to have_many(:comments).depentent(:destroy) }
 
   before do
     @user = FactoryBot.build(:user)

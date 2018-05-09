@@ -1,6 +1,8 @@
 require "spec_helper"
 
-describe Comment, type: :model do
+describe Comment do
+  it { is_expected.to belong_to :user }
+  it { is_expected.to belong_to :recipe }
 
   before do
     @comment = FactoryBot.build(:comment)
